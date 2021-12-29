@@ -18,6 +18,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 
 import digieggs_logo from "../assets/digieggs_logo.png";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { Link} from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -181,7 +182,9 @@ export default function PrimarySearchAppBar() {
             DIGIEGGS
           </Typography> */}
           <div>
+          <Link to="/">
             <img src={digieggs_logo} alt="digieggs-logo" />
+            </Link>
           </div>
           <Search>
             <SearchIconWrapper>
@@ -192,6 +195,7 @@ export default function PrimarySearchAppBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+          <Link to="/bookmarked" style = {{textDecoration: 'none', color: "inherit"}}>
           <div style={{ display: "flex", paddingLeft: "24px" }}>
             <BookmarkBorderIcon display="block" />
             <Typography
@@ -204,6 +208,7 @@ export default function PrimarySearchAppBar() {
               Bookmarks
             </Typography>
           </div>
+          </Link>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton

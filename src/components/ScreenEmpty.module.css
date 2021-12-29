@@ -1,0 +1,21 @@
+.container {
+        height: 100vh;
+        display: flex;
+
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+}
+
+
+
+.icons {
+    width: 86px; 
+    height: 86px; 
+    fill: #85b0f2
+}
+
+.text {
+    font-size: 24px;
+    color: #85b0f2;
+}

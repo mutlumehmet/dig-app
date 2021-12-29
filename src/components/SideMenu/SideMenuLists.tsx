@@ -10,11 +10,13 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import Cloud from '@mui/icons-material/Cloud';
+import { Link} from "react-router-dom";
 
 export default function SideMenuLists() {
   return (
     <Paper sx={{ width: 360, maxWidth: '100%' }}>
       <MenuList>
+      <Link to="/repolist" style = {{textDecoration: 'none', color: "inherit"}}>
         <MenuItem>
           <ListItemIcon>
             <InsertDriveFileIcon fontSize="medium" />
@@ -24,6 +26,9 @@ export default function SideMenuLists() {
             2,555
           </Typography>
         </MenuItem>
+        </Link>
+        
+        <Link to="/userlist" style = {{textDecoration: 'none', color: "inherit"}}>
         <MenuItem>
           <ListItemIcon>
             <InsertEmoticonIcon fontSize="medium" />
@@ -33,6 +38,9 @@ export default function SideMenuLists() {
             3
           </Typography>
         </MenuItem>
+        </Link>
+        
+        <Link to="/bookmarked" style = {{textDecoration: 'none', color: "inherit"}}>
         <MenuItem>
           <ListItemIcon>
             <BookmarkBorderIcon fontSize="medium" />
@@ -42,8 +50,10 @@ export default function SideMenuLists() {
             12
           </Typography>
         </MenuItem>
+        </Link>
         {/* <Divider /> */}
       </MenuList>
+      
     </Paper>
   );
 }
