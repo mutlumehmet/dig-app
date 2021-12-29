@@ -9,7 +9,7 @@ import styles from "./App.module.css";
 import Header from "./components/Header";
 import ScreenEmpty from "./components/ScreenEmpty";
 import SidePanel from "./components/SideMenu/SidePanel";
-import RepositoriesListScreen from "./components/Repositories/RepositoriesListScreen";
+import RepoListScreen from "./components/Repositories/RepoListScreen";
 import BookmarksSidePanel from "./components/Bookmarks/BookmarksSidePanel";
 import BookmarksListScreen from "./components/Bookmarks/BookmarksListScreen";
 import UsersListScreen from "./components/Users/UsersListScreen";
@@ -38,7 +38,7 @@ const App: FC = () => {
           <div>
             <Routes>
                 <Route element={<ScreenEmpty />} path="/" />
-                <Route element={<RepositoriesListScreen />} path="/repolist" />
+                <Route element={<RepoListScreen />} path="/repolist" />
                 <Route element={<UsersListScreen />} path="/userlist" />
                 <Route element={<BookmarksListScreen />} path="/bookmarked" />
             </Routes>

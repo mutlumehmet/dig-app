@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { Component, FC } from "react";
 import styles from "./ListCard.module.css";
 
 interface Props {
-  icon: string;
+  icon: string | any;
   title: string;
   description: string;
 }
