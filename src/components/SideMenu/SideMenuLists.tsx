@@ -11,8 +11,13 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import Cloud from '@mui/icons-material/Cloud';
 import { Link} from "react-router-dom";
+import { useContext } from 'react';
+import RepoResultsCountContext from '../../store/repo-results-count-context';
 
 export default function SideMenuLists() {
+  const ctx = useContext(RepoResultsCountContext);
+
+
   return (
     <Paper sx={{ width: 360, maxWidth: '100%' }}>
       <MenuList>
@@ -23,7 +28,7 @@ export default function SideMenuLists() {
           </ListItemIcon>
           <ListItemText>Repositories</ListItemText>
           <Typography variant="body2" color="text.secondary">
-            2,555
+            {ctx.repoResultsCount}
           </Typography>
         </MenuItem>
         </Link>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { FC } from "react";
 
@@ -8,11 +8,18 @@ import SidePanel from "./components/SideMenu/SidePanel";
 import RepoListScreen from "./components/Repositories/RepoListScreen";
 import BookmarksListScreen from "./components/Bookmarks/BookmarksListScreen";
 import UsersListScreen from "./components/Users/UsersListScreen";
+import InputContext from "./store/input-context";
+import RepoResultsCountContext from "./store/repo-results-count-context";
 
 const App: FC = () => {
   //111. The http request logic //
   const [validInput, setValidInput] = useState("")
+  const [isInputChanged, setIsInputChanged] = useState(false)
   const [repos, setRepos] = useState([]);
+  const [repoResultsCount, setRepoResultsCount] = useState(0)
+
+  const ctx = useContext(InputContext);
+
 
   const handleValidInput = (valid:string) => {
     setValidInput(valid)
@@ -24,9 +31,9 @@ const App: FC = () => {
     const RepoURL = `https://api.github.com/search/repositories?q=${URLPar}`;
 
     const response = await fetch(RepoURL);
-    const data = await response.json();
+    const repodata = await response.json();
 
-    const transRepos = data.items.map((repoData: any[] | any) => {
+    const transRepos = repodata.items.map((repoData: any[] | any) => {
       return {
         repoId: repoData.id,
         repoTitle: repoData.full_name,
@@ -35,16 +42,41 @@ const App: FC = () => {
     });
 
     setRepos(transRepos);
+
+    setRepoResultsCount(repodata.total_count)
   }
+
+  useEffect(()=>{
+    setIsInputChanged(true)
+  },[ctx.isInputChanged])
 
   useEffect(()=>{
     handleFetchRepos();
   },[validInput])
   
 
+  
+  
+  
+
+
   //11111111111111111111111111111111
 
+
+  
+
   return (
+    <RepoResultsCountContext.Provider value={{
+      repoResultsCount: repoResultsCount
+    }}>
+    
+    <InputContext.Provider
+    value={{
+      isInputChanged: isInputChanged,
+    }}
+    >
+    
+
     <BrowserRouter>
       <div>
         <Header onValidInput={handleValidInput} />
@@ -66,6 +98,8 @@ const App: FC = () => {
         </div>
       </div>
     </BrowserRouter>
+    </InputContext.Provider>
+    </RepoResultsCountContext.Provider>
   );
 };
 

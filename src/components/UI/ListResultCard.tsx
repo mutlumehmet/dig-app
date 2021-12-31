@@ -2,7 +2,7 @@ import styles from "./ListResultCard.module.css"
 import {FC} from "react"
 
 interface Props {
-    text: string;
+    text: string | number;
   }
 
 const ListResultCard: FC<Props> = (props) => {
