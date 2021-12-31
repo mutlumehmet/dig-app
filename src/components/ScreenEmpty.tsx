@@ -1,11 +1,13 @@
 import { FC } from "react";
-import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
+import ScreenSearchDesktopRoundedIcon from '@mui/icons-material/ScreenSearchDesktopRounded';
 import styles from "./ScreenEmpty.module.css";
 
 const ScreenEmpty: FC = () => {
   return (
     <div className={styles.container}>
-      <ScreenSearchDesktopIcon className={styles.icon} />
+      <div>
+      <ScreenSearchDesktopRoundedIcon className={styles.icon} />
+      </div>
       <p className={styles.text}>Search Results Will Appear Here</p>
     </div>
   );

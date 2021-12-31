@@ -4,7 +4,7 @@ import styles from "./ListCard.module.css";
 interface Props {
   icon: string | any;
   title: string;
-  description: string;
+  description: any;
 }
 
 const ListCard: FC<Props> = (props) => {

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,13 +8,14 @@ import Typography from '@mui/material/Typography';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import Cloud from '@mui/icons-material/Cloud';
 import { Link} from "react-router-dom";
 import { useContext } from 'react';
 import RepoResultsCountContext from '../../store/repo-results-count-context';
+import UserResultsCountContext from '../../store/user-results-count-context';
 
 export default function SideMenuLists() {
-  const ctx = useContext(RepoResultsCountContext);
+  const ctxRepo = useContext(RepoResultsCountContext);
+  const ctxUser = useContext(UserResultsCountContext);
 
 
   return (
@@ -28,7 +28,7 @@ export default function SideMenuLists() {
           </ListItemIcon>
           <ListItemText>Repositories</ListItemText>
           <Typography variant="body2" color="text.secondary">
-            {ctx.repoResultsCount}
+            {ctxRepo.repoResultsCount}
           </Typography>
         </MenuItem>
         </Link>
@@ -40,7 +40,7 @@ export default function SideMenuLists() {
           </ListItemIcon>
           <ListItemText>Users</ListItemText>
           <Typography variant="body2" color="text.secondary">
-            3
+          {ctxUser.userResultsCount}
           </Typography>
         </MenuItem>
         </Link>

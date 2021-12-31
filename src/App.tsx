@@ -7,9 +7,11 @@ import ScreenEmpty from "./components/ScreenEmpty";
 import SidePanel from "./components/SideMenu/SidePanel";
 import RepoListScreen from "./components/Repositories/RepoListScreen";
 import BookmarksListScreen from "./components/Bookmarks/BookmarksListScreen";
-import UsersListScreen from "./components/Users/UsersListScreen";
+import UserListScreen from "./components/Users/UserListScreen";
 import InputContext from "./store/input-context";
 import RepoResultsCountContext from "./store/repo-results-count-context";
+import UserResultsCountContext from "./store/user-results-count-context";
+
 
 const App: FC = () => {
   //111. The http request logic //
@@ -17,6 +19,8 @@ const App: FC = () => {
   const [isInputChanged, setIsInputChanged] = useState(false)
   const [repos, setRepos] = useState([]);
   const [repoResultsCount, setRepoResultsCount] = useState(0)
+  const [users, setUsers] = useState([]);
+  const [userResultsCount, setUserResultsCount] = useState(0)
 
   const ctx = useContext(InputContext);
 
@@ -25,6 +29,7 @@ const App: FC = () => {
     setValidInput(valid)
   }
   
+  //RepoFetch
 
   async function handleFetchRepos() {
     const URLPar = validInput;
@@ -45,6 +50,31 @@ const App: FC = () => {
 
     setRepoResultsCount(repodata.total_count)
   }
+////////
+
+//UserFetch
+
+async function handleFetchUsers() {
+  const URLPar = validInput;
+  const UserURL = `https://api.github.com/search/users?q=${URLPar}`;
+
+  const response = await fetch(UserURL);
+  const userdata = await response.json();
+
+  const transUsers = userdata.items.map((userData: any[] | any) => {
+    return {
+      userId: userData.id,
+      userTitle: userData.login,
+      userText: userData.html_url,
+      userImgUrl: userData.avatar_url,
+    };
+  });
+
+  setUsers(transUsers);
+
+  setUserResultsCount(userdata.total_count)
+}
+////////
 
   useEffect(()=>{
     setIsInputChanged(true)
@@ -52,6 +82,7 @@ const App: FC = () => {
 
   useEffect(()=>{
     handleFetchRepos();
+    handleFetchUsers()
   },[validInput])
   
 
@@ -66,6 +97,10 @@ const App: FC = () => {
   
 
   return (
+   <UserResultsCountContext.Provider value={{
+      userResultsCount: userResultsCount
+    }}>
+
     <RepoResultsCountContext.Provider value={{
       repoResultsCount: repoResultsCount
     }}>
@@ -92,7 +127,7 @@ const App: FC = () => {
               element={<RepoListScreen repos={repos} />}
               path="/repolist"
             />
-            <Route element={<UsersListScreen />} path="/userlist" />
+            <Route element={<UserListScreen users={users} />} path="/userlist" />
             <Route element={<BookmarksListScreen />} path="/bookmarked" />
           </Routes>
         </div>
@@ -100,6 +135,7 @@ const App: FC = () => {
     </BrowserRouter>
     </InputContext.Provider>
     </RepoResultsCountContext.Provider>
+    </UserResultsCountContext.Provider>
   );
 };
 
