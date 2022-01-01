@@ -1,21 +1,23 @@
-import React, { useState, useEffect, useContext } from "react";
-import { BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
+import React, { useState, useEffect} from "react";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
 import { FC } from "react";
 
 
 import Header from "./components/Header";
 import ScreenEmpty from "./components/ScreenEmpty";
-import SidePanel from "./components/SideMenu/SidePanel";
 import RepoListScreen from "./components/Repositories/RepoListScreen";
 import BookmarksListScreen from "./components/Bookmarks/BookmarksListScreen";
 import UserListScreen from "./components/Users/UserListScreen";
 import InputContext from "./store/input-context";
 import RepoResultsCountContext from "./store/repo-results-count-context";
 import UserResultsCountContext from "./store/user-results-count-context";
+import SideMenuLists from "./components/SideMenu/SideMenuLists";
+import RepoSideBar from "./components/SideMenu/RepoSideBar";
+import RepoProfileScreen from "./components/Repositories/RepoProfileScreen";
 
 
 const App: FC = () => {
-  //111. The http request logic //
+  
   const [validInput, setValidInput] = useState("")
   const [repos, setRepos] = useState([]);
   const [repoResultsCount, setRepoResultsCount] = useState(0)
@@ -102,9 +104,11 @@ async function handleFetchUsers() {
   
 
 
-  //11111111111111111111111111111111
 
 
+  const defaultSideBar = <div style= {{display: !isInputEntered ? "none" : ""}}>
+  <SideMenuLists />
+</div>
   
 
   return (
@@ -129,15 +133,32 @@ async function handleFetchUsers() {
         <Header onValidInput={handleValidInput} onInputEntered={handleInputEntered} onClearInput={handleClearInput} />
       </div>
       <div>
-        <div style= {{display: !isInputEntered ? "none" : ""}}>
+        {/* <div style= {{display: !isInputEntered ? "none" : ""}}>
           <SidePanel />
-        </div>
+        </div> */}
         <div>
+        
+        {/* Sidebar */}
+        <Routes>  
+            <Route
+              element={defaultSideBar}
+              path="/repolist"
+            />
+            <Route
+              element={<RepoSideBar/>}
+              path="/repo"
+            />
+          </Routes>
+        {/* MainScreen */}
           <Routes>
             <Route element={<ScreenEmpty />} path="/" />
             <Route
               element={<RepoListScreen repos={repos} />}
               path="/repolist"
+            />
+            <Route
+              element={<RepoProfileScreen/>}
+              path="/repo"
             />
             <Route element={<UserListScreen users={users} />} path="/userlist" />
             <Route element={<BookmarksListScreen />} path="/bookmarked" />

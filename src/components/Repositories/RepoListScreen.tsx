@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import styles from "./RepoListScreen.module.css";
 import BookOutlinedIcon from "@mui/icons-material/BookOutlined";
 import ListCard from "../UI/ListCard";
 import ListResultCard from "../UI/ListResultCard";
 import RepoResultsCountContext from "../../store/repo-results-count-context";
+import MainPanelHalfCard from "../UI/MainPanelHalfCard";
 
 const RepoListScreen = (props: any) => {
   const ctx = useContext(RepoResultsCountContext);
@@ -32,10 +32,10 @@ const RepoListScreen = (props: any) => {
   );
 
   return (
-    <div className={styles["repo-list"]}>
+    <MainPanelHalfCard >
       <div>{resultsCountText}</div>
       <div>{repoItems}</div>
-    </div>
+    </MainPanelHalfCard>
   );
 };
 

@@ -12,6 +12,7 @@ import { Link} from "react-router-dom";
 import { useContext } from 'react';
 import RepoResultsCountContext from '../../store/repo-results-count-context';
 import UserResultsCountContext from '../../store/user-results-count-context';
+import SidePanelCard from '../UI/SidePanelCard';
 
 export default function SideMenuLists() {
   const ctxRepo = useContext(RepoResultsCountContext);
@@ -19,6 +20,7 @@ export default function SideMenuLists() {
 
 
   return (
+    <SidePanelCard>
     <Paper >
       <MenuList>
       <Link to="/repolist" style = {{textDecoration: 'none', color: "inherit"}}>
@@ -60,5 +62,6 @@ export default function SideMenuLists() {
       </MenuList>
       
     </Paper>
+    </SidePanelCard>
   );
 }

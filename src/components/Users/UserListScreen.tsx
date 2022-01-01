@@ -4,6 +4,7 @@ import ListCard from "../UI/ListCard";
 import ListResultCard from "../UI/ListResultCard";
 import UserResultsCountContext from "../../store/user-results-count-context";
 import Avatar from '@mui/material/Avatar';
+import MainPanelCard from "../UI/MainPanelFullCard"
 
 const UserListScreen = (props: any) => {
     const ctx = useContext(UserResultsCountContext);
