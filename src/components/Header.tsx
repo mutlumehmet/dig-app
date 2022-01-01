@@ -50,8 +50,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar(props:any) {
-  const [input, setInput] = useState("");
-  
+  const [input, setInput] = useState("");  
 
   
 
@@ -66,6 +65,7 @@ export default function PrimarySearchAppBar(props:any) {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       props.onValidInput(input)
+      props.onInputEntered()
       setInput("")
     }
   }
@@ -73,7 +73,7 @@ export default function PrimarySearchAppBar(props:any) {
   return (
     <AppBar position="static">
       <Toolbar>
-        <div>
+        <div onClick= {props.onClearInput}>
           <Link to="/">
             <img src={digieggs_logo} alt="digieggs-logo" />
           </Link>

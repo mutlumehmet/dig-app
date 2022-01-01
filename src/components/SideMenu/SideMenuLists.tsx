@@ -19,7 +19,7 @@ export default function SideMenuLists() {
 
 
   return (
-    <Paper sx={{ width: 360, maxWidth: '100%' }}>
+    <Paper >
       <MenuList>
       <Link to="/repolist" style = {{textDecoration: 'none', color: "inherit"}}>
         <MenuItem>

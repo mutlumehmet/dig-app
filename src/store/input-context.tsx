@@ -1,11 +1,11 @@
 import React from 'react';
 
 interface InputContextInterface {
-    isInputChanged: boolean;
+    isInputEntered: boolean;
 }
 
 const InputContext = React.createContext<InputContextInterface>({
-    isInputChanged: false
+    isInputEntered: false
 });
 
 export default InputContext;

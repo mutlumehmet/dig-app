@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
 import { FC } from "react";
+
 
 import Header from "./components/Header";
 import ScreenEmpty from "./components/ScreenEmpty";
@@ -16,18 +17,33 @@ import UserResultsCountContext from "./store/user-results-count-context";
 const App: FC = () => {
   //111. The http request logic //
   const [validInput, setValidInput] = useState("")
-  const [isInputChanged, setIsInputChanged] = useState(false)
   const [repos, setRepos] = useState([]);
   const [repoResultsCount, setRepoResultsCount] = useState(0)
   const [users, setUsers] = useState([]);
   const [userResultsCount, setUserResultsCount] = useState(0)
-
-  const ctx = useContext(InputContext);
+  const [isInputEntered, setIsInputEntered] = useState(false)
 
 
   const handleValidInput = (valid:string) => {
     setValidInput(valid)
   }
+
+  const handleClearInput = () => {
+    setIsInputEntered(false)
+  }
+
+  const handleInputEntered = () => {
+    setTimeout(() => {
+      setIsInputEntered(true)
+  }, 1000);
+  }
+
+  
+  
+
+  
+  
+
   
   //RepoFetch
 
@@ -74,11 +90,6 @@ async function handleFetchUsers() {
 
   setUserResultsCount(userdata.total_count)
 }
-////////
-
-  useEffect(()=>{
-    setIsInputChanged(true)
-  },[ctx.isInputChanged])
 
   useEffect(()=>{
     handleFetchRepos();
@@ -107,17 +118,18 @@ async function handleFetchUsers() {
     
     <InputContext.Provider
     value={{
-      isInputChanged: isInputChanged,
+      isInputEntered: isInputEntered,
     }}
     >
     
 
     <BrowserRouter>
+    
       <div>
-        <Header onValidInput={handleValidInput} />
+        <Header onValidInput={handleValidInput} onInputEntered={handleInputEntered} onClearInput={handleClearInput} />
       </div>
       <div>
-        <div>
+        <div style= {{display: !isInputEntered ? "none" : ""}}>
           <SidePanel />
         </div>
         <div>
@@ -137,6 +149,7 @@ async function handleFetchUsers() {
     </RepoResultsCountContext.Provider>
     </UserResultsCountContext.Provider>
   );
+
 };
 
 export default App;
