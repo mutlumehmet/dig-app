@@ -232,7 +232,7 @@ const App: FC = () => {
                     path="/userlist"
                   />
                   <Route
-                    element={<UserProfileScreen userRepos={userRepos} userProfileData={userProfData} />}
+                    element={<UserProfileScreen userRepos={userRepos} userProfileData={userProfData} repoUrlLiftUp={handleGetSingleRepo} />}
                     path="/user"
                   />
                   <Route element={<BookmarksListScreen />} path="/bookmarked" />
