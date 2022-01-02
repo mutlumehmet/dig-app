@@ -1,0 +1,50 @@
+
+
+.box {
+  max-width: 360px;
+  padding: 40px 46px 40px 46px;
+  display: flex;
+  flex-direction: column;
+}
+
+.box img {
+  width: 206px;
+  height: 206px;
+  border-radius: 50%;
+}
+
+.title {
+  font-family: Roboto;
+  font-size: 24px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000;
+  margin: 30px 0 8px 0;
+}
+
+.sub-title {font-family: Roboto;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #646464;}
+
+ 
+  .url-text {
+    margin: 16px 0px 5px 0px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000; }

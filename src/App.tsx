@@ -13,12 +13,16 @@ import UserResultsCountContext from "./store/user-results-count-context";
 import SideMenuLists from "./components/SideMenu/SideMenuLists";
 import RepoSideBar from "./components/SideMenu/RepoSideBar";
 import RepoProfileScreen from "./components/Repositories/RepoProfileScreen";
+import UserSideBar from "./components/SideMenu/UserSideBar";
+import { UserProfileScreen } from "./components/Users/UserProfileScreen";
 
 const App: FC = () => {
   const [validInput, setValidInput] = useState("");
   const [repos, setRepos] = useState([]);
-  const [repoProfileURL, setRepoProfileURL] = useState("")
-  const [repoProfData, setRepoProfData] = useState([])
+  const [userRepos, setUserRepos] = useState([]);
+  const [userReposURL, setUserReposURL] = useState("");
+  const [repoProfileURL, setRepoProfileURL] = useState("");
+  const [repoProfData, setRepoProfData] = useState([]);
   const [repoResultsCount, setRepoResultsCount] = useState(0);
   const [users, setUsers] = useState([]);
   const [userResultsCount, setUserResultsCount] = useState(0);
@@ -38,14 +42,14 @@ const App: FC = () => {
     }, 200);
   };
 
-  //RepoFetch
+  //FetchSingleRepoProfile
 
-  const handleGetSingleRepo = (repoProfURL:string) => {
+  const handleGetSingleRepo = (repoProfURL: string) => {
     setRepoProfileURL(repoProfURL);
-  }
+  };
 
   async function handleFetchRepoProfile() {
-    const response = await fetch(repoProfileURL)
+    const response = await fetch(repoProfileURL);
     const repoProfileData = await response.json();
     setRepoProfData(repoProfileData);
   }
@@ -54,7 +58,9 @@ const App: FC = () => {
     handleFetchRepoProfile();
   }, [repoProfileURL]);
 
+  //
 
+  //Fetch Repos
   async function handleFetchRepos() {
     const URLPar = validInput;
     const RepoURL = `https://api.github.com/search/repositories?q=${URLPar}`;
@@ -76,7 +82,35 @@ const App: FC = () => {
   }
   ////////
 
-  //UserFetch
+  //Fetch User Repos
+  const handleGetUserRepos = (URL: string) => {
+    console.log(URL);
+    setUserReposURL(URL);
+    
+  };
+
+  useEffect(() => {
+    handleFetchUserRepos();
+  }, [userReposURL]);
+
+  async function handleFetchUserRepos() {
+    const response = await fetch(userReposURL);
+    const repodata = await response.json();
+
+    const transUserRepos = repodata.map((repoData: any[] | any) => {
+      return {
+        repoId: repoData.id,
+        repoTitle: repoData.full_name,
+        repoText: repoData.description,
+      };
+    });
+
+    setUserRepos(transUserRepos);
+  }
+
+  ////////
+
+  //Fetch User
 
   async function handleFetchUsers() {
     const URLPar = validInput;
@@ -142,21 +176,42 @@ const App: FC = () => {
                 {/* Sidebar */}
                 <Routes>
                   <Route element={defaultSideBar} path="/repolist" />
-                  <Route element={<RepoSideBar repoData={repoProfData} />} path="/repo" />
+                  <Route
+                    element={<RepoSideBar repoData={repoProfData} />}
+                    path="/repo"
+                  />
                   <Route element={defaultSideBar} path="/userlist" />
+                  <Route element={<UserSideBar />} path="/user" />
                 </Routes>
 
                 {/* MainScreen */}
                 <Routes>
                   <Route element={<ScreenEmpty />} path="/" />
                   <Route
-                    element={<RepoListScreen repos={repos} repoUrlLiftUp={handleGetSingleRepo} />}
+                    element={
+                      <RepoListScreen
+                        repos={repos}
+                        repoUrlLiftUp={handleGetSingleRepo}
+                      />
+                    }
                     path="/repolist"
                   />
-                  <Route element={<RepoProfileScreen repoData={repoProfData} />} path="/repo" />
                   <Route
-                    element={<UserListScreen users={users} />}
+                    element={<RepoProfileScreen repoData={repoProfData} />}
+                    path="/repo"
+                  />
+                  <Route
+                    element={
+                      <UserListScreen
+                        users={users}
+                        repoUserUrlLiftUp={handleGetUserRepos}
+                      />
+                    }
                     path="/userlist"
+                  />
+                  <Route
+                    element={<UserProfileScreen userRepos={userRepos} />}
+                    path="/user"
                   />
                   <Route element={<BookmarksListScreen />} path="/bookmarked" />
                 </Routes>

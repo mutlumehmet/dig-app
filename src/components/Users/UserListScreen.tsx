@@ -4,12 +4,14 @@ import ListResultCard from "../UI/ListResultCard";
 import UserResultsCountContext from "../../store/user-results-count-context";
 import Avatar from '@mui/material/Avatar';
 import MainPanelHalfCard from "../UI/MainPanelHalfCard";
+import { Link} from "react-router-dom";
 
 const UserListScreen = (props: any) => {
     const ctx = useContext(UserResultsCountContext);
-    const getFullName = (title: string) => {
-      const repoUserURL = `https://api.github.com/users/${title}`
-    console.log(repoUserURL)
+    const getUserName = (title: string) => {
+      const userReposListURL = `https://api.github.com/users/${title}/repos`
+      props.repoUserUrlLiftUp(userReposListURL)
+    
     }
   
 
@@ -32,7 +34,7 @@ const UserListScreen = (props: any) => {
           title={userTitle}
           // description={<a href={userText} style = {{textDecoration: 'none', color: "inherit"}}>{userText}</a>}
           description={userText}
-          onRepoFullName={getFullName}
+          onRepoFullName={getUserName}
         />
       )
     );
@@ -44,7 +46,9 @@ const UserListScreen = (props: any) => {
     return (
       <MainPanelHalfCard>
         <div>{resultsCountText}</div>
+        <Link to="/user" style = {{textDecoration: 'none', color: "inherit"}}>
         <div>{userItems}</div>
+        </Link>
       </MainPanelHalfCard>
     );
   };
