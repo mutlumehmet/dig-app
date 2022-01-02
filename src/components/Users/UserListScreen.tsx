@@ -9,8 +9,12 @@ import { Link} from "react-router-dom";
 const UserListScreen = (props: any) => {
     const ctx = useContext(UserResultsCountContext);
     const getUserName = (title: string) => {
+      
       const userReposListURL = `https://api.github.com/users/${title}/repos`
       props.repoUserUrlLiftUp(userReposListURL)
+
+      const userProfileURL = `https://api.github.com/users/${title}`
+      props.userURLLiftUp(userProfileURL)
     
     }
   

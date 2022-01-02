@@ -21,6 +21,8 @@ const App: FC = () => {
   const [repos, setRepos] = useState([]);
   const [userRepos, setUserRepos] = useState([]);
   const [userReposURL, setUserReposURL] = useState("");
+  const [userProfileURL, setUserProfileURL] = useState("");
+  const [userProfData, setUserProfData] = useState([])
   const [repoProfileURL, setRepoProfileURL] = useState("");
   const [repoProfData, setRepoProfData] = useState([]);
   const [repoResultsCount, setRepoResultsCount] = useState(0);
@@ -60,6 +62,26 @@ const App: FC = () => {
 
   //
 
+  //FetchSingle USER Profile
+
+  const getUserProfile = (userProfURL: string) => {
+    console.log(userProfURL)
+    setUserProfileURL(userProfURL);
+  };
+
+  async function handleFetchUserProfile() {
+    const response = await fetch(userProfileURL);
+    const userProfileData = await response.json();
+    setUserProfData(userProfileData);
+  }
+
+
+  useEffect(() => {
+    handleFetchUserProfile();
+  }, [userProfileURL]);
+
+  //
+
   //Fetch Repos
   async function handleFetchRepos() {
     const URLPar = validInput;
@@ -84,7 +106,6 @@ const App: FC = () => {
 
   //Fetch User Repos
   const handleGetUserRepos = (URL: string) => {
-    console.log(URL);
     setUserReposURL(URL);
     
   };
@@ -181,7 +202,7 @@ const App: FC = () => {
                     path="/repo"
                   />
                   <Route element={defaultSideBar} path="/userlist" />
-                  <Route element={<UserSideBar />} path="/user" />
+                  <Route element={<UserSideBar userProfileData={userProfData} />} path="/user" />
                 </Routes>
 
                 {/* MainScreen */}
@@ -205,12 +226,13 @@ const App: FC = () => {
                       <UserListScreen
                         users={users}
                         repoUserUrlLiftUp={handleGetUserRepos}
+                        userURLLiftUp={getUserProfile}
                       />
                     }
                     path="/userlist"
                   />
                   <Route
-                    element={<UserProfileScreen userRepos={userRepos} />}
+                    element={<UserProfileScreen userRepos={userRepos} userProfileData={userProfData} />}
                     path="/user"
                   />
                   <Route element={<BookmarksListScreen />} path="/bookmarked" />

@@ -1,14 +1,14 @@
 import SidePanelCard from "../UI/SidePanelCard";
 import styles from "./UserSideBar.module.css";
 
-const UserSideBar = () => {
+const UserSideBar = (props: any) => {
   return (
     <SidePanelCard>
       <div className={styles.box}>
-      <img src="https://avatars.githubusercontent.com/u/90329858?v=4" alt="User"/>
-      <div className={styles.title}>Mehmet Mutlu</div>
-      <div className={styles["sub-title"]}>mutlumehmet</div>
-      <div className={styles["url-text"]}>React Developer @digieggs</div>
+      <img src={props.userProfileData.avatar_url} alt={props.userProfileData.login}/>
+      <div className={styles.title}>{props.userProfileData.name}</div>
+      <div className={styles["sub-title"]}>{props.userProfileData.login}</div>
+      <div className={styles["url-text"]}>{props.userProfileData.bio}</div>
       </div>
     </SidePanelCard>
   );

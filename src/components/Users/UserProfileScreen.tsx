@@ -40,7 +40,7 @@ const UserProfileScreen = (props:any) => {
       );
     
       const resultsCountText = (
-        <ListResultCard text={`9999 Repository Results`} />
+        <ListResultCard text={`${props.userProfileData.public_repos} Repositories`} />
       );
 
     return (
