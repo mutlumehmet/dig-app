@@ -4,7 +4,19 @@ import styles from "./RepoSideBar.module.css";
 import LinkIcon from "@mui/icons-material/Link";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import RepoSideBarListItemCard from "../UI/RepoSideBarListItemCard";
+import BookmarksButton from "../UI/BookmarksButton"
+
 const RepoSideBar= (props: any) => {
+
+//BookmarksClickLogic
+
+
+
+const handleClick = () => {
+  props.liftBookmarks()
+}
+
+
   return (
     <SidePanelCard>
       <div className={styles.box}>
@@ -45,7 +57,7 @@ const RepoSideBar= (props: any) => {
 
         <div
           style={{
-            minHeight: "50px"
+            height: "35px"
           }}
         ></div>
 
@@ -67,7 +79,20 @@ const RepoSideBar= (props: any) => {
           counterNumber={props.repoData.network_count}
           showDivider={false}
         />
+        <div
+          style={{
+            height: "25px"
+          }}
+        ></div>
+        <div onClick={handleClick}>
+        <BookmarksButton/>
+        </div>
       </div>
+      <div 
+          style={{
+            height: "60px"
+          }}
+        ></div>
     </SidePanelCard>
   );
 };

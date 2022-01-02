@@ -5,11 +5,14 @@ import { FC } from "react";
 import Header from "./components/Header";
 import ScreenEmpty from "./components/ScreenEmpty";
 import RepoListScreen from "./components/Repositories/RepoListScreen";
-import BookmarksListScreen from "./components/Bookmarks/BookmarksListScreen";
+import Bookmarks from "./components/Bookmarks/Bookmarks";
 import UserListScreen from "./components/Users/UserListScreen";
+
 import InputContext from "./store/input-context";
 import RepoResultsCountContext from "./store/repo-results-count-context";
 import UserResultsCountContext from "./store/user-results-count-context";
+import BookmarksContext from "./store/bookmarks-context";
+
 import SideMenuLists from "./components/SideMenu/SideMenuLists";
 import RepoSideBar from "./components/SideMenu/RepoSideBar";
 import RepoProfileScreen from "./components/Repositories/RepoProfileScreen";
@@ -22,13 +25,22 @@ const App: FC = () => {
   const [userRepos, setUserRepos] = useState([]);
   const [userReposURL, setUserReposURL] = useState("");
   const [userProfileURL, setUserProfileURL] = useState("");
-  const [userProfData, setUserProfData] = useState([])
+  const [userProfData, setUserProfData] = useState([]);
   const [repoProfileURL, setRepoProfileURL] = useState("");
   const [repoProfData, setRepoProfData] = useState([]);
   const [repoResultsCount, setRepoResultsCount] = useState(0);
   const [users, setUsers] = useState([]);
   const [userResultsCount, setUserResultsCount] = useState(0);
   const [isInputEntered, setIsInputEntered] = useState(false);
+  const [bookmarksArray, setBookmarksArray] = useState<RepoDataInterface[]>([] as RepoDataInterface[] );
+  const [newBookmark, setNewBookmark] = useState<RepoDataInterface[]>([] as RepoDataInterface[] );
+  
+  interface RepoDataInterface {
+    repoId: number;
+    repoTitle: string;
+    repoText: string;
+}
+ 
 
   const handleValidInput = (valid: string) => {
     setValidInput(valid);
@@ -54,6 +66,9 @@ const App: FC = () => {
     const response = await fetch(repoProfileURL);
     const repoProfileData = await response.json();
     setRepoProfData(repoProfileData);
+    createNewBookmark(repoProfileData);
+    
+
   }
 
   useEffect(() => {
@@ -62,10 +77,28 @@ const App: FC = () => {
 
   //
 
+//Bookmarks Logic Here
+
+const createNewBookmark = (data:any) => {
+  const Bookmark = {
+    repoId: data.id,
+    repoTitle: data.full_name,
+    repoText: data.description
+  }
+  
+}
+const addBookmark = (Bookmark:RepoDataInterface) => {
+  setBookmarksArray(prevBook =>[...prevBook,Bookmark]);
+  console.log(bookmarksArray);
+};
+
+/////
+
+
   //FetchSingle USER Profile
 
   const getUserProfile = (userProfURL: string) => {
-    console.log(userProfURL)
+    console.log(userProfURL);
     setUserProfileURL(userProfURL);
   };
 
@@ -74,7 +107,6 @@ const App: FC = () => {
     const userProfileData = await response.json();
     setUserProfData(userProfileData);
   }
-
 
   useEffect(() => {
     handleFetchUserProfile();
@@ -107,7 +139,6 @@ const App: FC = () => {
   //Fetch User Repos
   const handleGetUserRepos = (URL: string) => {
     setUserReposURL(URL);
-    
   };
 
   useEffect(() => {
@@ -166,83 +197,100 @@ const App: FC = () => {
   );
 
   return (
-    <UserResultsCountContext.Provider
-      value={{
-        userResultsCount: userResultsCount,
-      }}
-    >
-      <RepoResultsCountContext.Provider
+    <BookmarksContext.Provider value={bookmarksArray}>
+      <UserResultsCountContext.Provider
         value={{
-          repoResultsCount: repoResultsCount,
+          userResultsCount: userResultsCount,
         }}
       >
-        <InputContext.Provider
+        <RepoResultsCountContext.Provider
           value={{
-            isInputEntered: isInputEntered,
+            repoResultsCount: repoResultsCount,
           }}
         >
-          <BrowserRouter>
-            <div>
-              <Header
-                onValidInput={handleValidInput}
-                onInputEntered={handleInputEntered}
-                onClearInput={handleClearInput}
-              />
-            </div>
-            <div>
-              {/* <div style= {{display: !isInputEntered ? "none" : ""}}>
+          <InputContext.Provider
+            value={{
+              isInputEntered: isInputEntered,
+            }}
+          >
+            <BrowserRouter>
+              <div>
+                <Header
+                  onValidInput={handleValidInput}
+                  onInputEntered={handleInputEntered}
+                  onClearInput={handleClearInput}
+                />
+              </div>
+              <div>
+                {/* <div style= {{display: !isInputEntered ? "none" : ""}}>
           <SidePanel />
         </div> */}
-              <div>
-                {/* Sidebar */}
-                <Routes>
-                  <Route element={defaultSideBar} path="/repolist" />
-                  <Route
-                    element={<RepoSideBar repoData={repoProfData} />}
-                    path="/repo"
-                  />
-                  <Route element={defaultSideBar} path="/userlist" />
-                  <Route element={<UserSideBar userProfileData={userProfData} />} path="/user" />
-                </Routes>
+                <div>
+                  {/* Sidebar */}
+                  <Routes>
+                    <Route element={defaultSideBar} path="/repolist" />
+                    <Route
+                      element={
+                        <RepoSideBar
+                          repoData={repoProfData}
+                          liftBookmarks={addBookmark}
+                        />
+                      }
+                      path="/repo"
+                    />
+                    <Route element={defaultSideBar} path="/userlist" />
+                    <Route
+                      element={<UserSideBar userProfileData={userProfData} />}
+                      path="/user"
+                    />
+                    <Route element={defaultSideBar} path="/bookmarks" />
+                  </Routes>
 
-                {/* MainScreen */}
-                <Routes>
-                  <Route element={<ScreenEmpty />} path="/" />
-                  <Route
-                    element={
-                      <RepoListScreen
-                        repos={repos}
-                        repoUrlLiftUp={handleGetSingleRepo}
-                      />
-                    }
-                    path="/repolist"
-                  />
-                  <Route
-                    element={<RepoProfileScreen repoData={repoProfData} />}
-                    path="/repo"
-                  />
-                  <Route
-                    element={
-                      <UserListScreen
-                        users={users}
-                        repoUserUrlLiftUp={handleGetUserRepos}
-                        userURLLiftUp={getUserProfile}
-                      />
-                    }
-                    path="/userlist"
-                  />
-                  <Route
-                    element={<UserProfileScreen userRepos={userRepos} userProfileData={userProfData} repoUrlLiftUp={handleGetSingleRepo} />}
-                    path="/user"
-                  />
-                  <Route element={<BookmarksListScreen />} path="/bookmarked" />
-                </Routes>
+                  {/* MainScreen */}
+                  <Routes>
+                    <Route element={<ScreenEmpty />} path="/" />
+                    <Route
+                      element={
+                        <RepoListScreen
+                          repos={repos}
+                          repoUrlLiftUp={handleGetSingleRepo}
+                        />
+                      }
+                      path="/repolist"
+                    />
+                    <Route
+                      element={<RepoProfileScreen repoData={repoProfData} />}
+                      path="/repo"
+                    />
+                    <Route
+                      element={
+                        <UserListScreen
+                          users={users}
+                          repoUserUrlLiftUp={handleGetUserRepos}
+                          userURLLiftUp={getUserProfile}
+                        />
+                      }
+                      path="/userlist"
+                    />
+                    <Route
+                      element={
+                        <UserProfileScreen
+                          userRepos={userRepos}
+                          userProfileData={userProfData}
+                          repoUrlLiftUp={handleGetSingleRepo}
+                        />
+                      }
+                      path="/user"
+                    />
+                    <Route element={<Bookmarks />} path="/bookmarked" />
+                  </Routes>
+                </div>
               </div>
-            </div>
-          </BrowserRouter>
-        </InputContext.Provider>
-      </RepoResultsCountContext.Provider>
-    </UserResultsCountContext.Provider>
+            </BrowserRouter>
+          </InputContext.Provider>
+        </RepoResultsCountContext.Provider>
+      </UserResultsCountContext.Provider>
+    </BookmarksContext.Provider>
   );
 };
 
