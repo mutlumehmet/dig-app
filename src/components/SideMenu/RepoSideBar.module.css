@@ -1,21 +1,22 @@
 .box {
-  max-width: 360px;
+  max-width: 300px;
   padding: 40px 46px 40px 46px;
   display: flex;
   flex-direction: column;
 }
 
 .title {
+  max-width:250px;
   font-family: Roboto;
   font-size: 24px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1;
   letter-spacing: normal;
   text-align: left;
   color: #375f9d;
   margin: 30px 0 8px 0;
+  word-wrap: break-word;
 }
 
 .sub-title {font-family: Roboto;
@@ -26,7 +27,8 @@
   line-height: 1.5;
   letter-spacing: normal;
   text-align: left;
-  color: #000;}
+  color: #000;
+  word-wrap: break-word;}
 
   .url-icon {
   width: 24px;
@@ -35,6 +37,7 @@
   
 }
   .url-text {
+    max-width:250px;
     margin: 16px 3px 16px 7px;
   font-family: Roboto;
   font-size: 20px;
@@ -45,6 +48,7 @@
   letter-spacing: normal;
   text-align: left;
   color: #2c98f0;
+  word-wrap: break-word;
   }
 
   .horizon-box {

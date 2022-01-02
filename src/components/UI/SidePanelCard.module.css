@@ -2,6 +2,7 @@
   position: fixed;
   border-right: 1px solid;
   border-color: #c4c4c4;
+  overflow-y: scroll;
   
   top: 70px;
   left: 0px;

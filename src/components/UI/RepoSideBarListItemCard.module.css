@@ -1,5 +1,5 @@
-.horizon-box {
-    display:flex;
+.horizon-box {  
+  display:flex;
     flex-direction:row;
     text-align: left;
     align-items: center;
