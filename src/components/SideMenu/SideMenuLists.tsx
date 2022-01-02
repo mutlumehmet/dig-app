@@ -20,6 +20,7 @@ export default function SideMenuLists() {
 
 
   return (
+    
     <SidePanelCard>
     <Paper >
       <MenuList>
@@ -63,5 +64,6 @@ export default function SideMenuLists() {
       
     </Paper>
     </SidePanelCard>
+    
   );
 }

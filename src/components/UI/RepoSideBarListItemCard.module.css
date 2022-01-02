@@ -1,0 +1,27 @@
+.horizon-box {
+    display:flex;
+    flex-direction:row;
+    text-align: left;
+    align-items: center;
+  justify-content: start;
+
+  }
+
+  .counter {
+    margin-left:auto;
+    font-size: 20px;
+  font-weight: bold;
+  text-align: right;
+  line-height: 1.2;
+  letter-spacing: normal;
+  color: #2c98f0;
+  }
+
+  .line-title {
+    margin: 12px 100px 12px 7px;
+  font-family: Roboto;
+  font-size: 20px;
+  line-height: 1.2;
+  text-align: left;
+  color: #000;
+  }

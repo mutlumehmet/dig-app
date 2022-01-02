@@ -8,6 +8,7 @@ import digieggs_logo from "../assets/digieggs_logo.png";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -50,7 +51,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar(props:any) {
-  const [input, setInput] = useState("");  
+  const [input, setInput] = useState("");
+  const [isPressed, setIsPressed] = useState(false);  
 
   
 
@@ -67,11 +69,20 @@ export default function PrimarySearchAppBar(props:any) {
       props.onValidInput(input)
       props.onInputEntered()
       setInput("")
+      setIsPressed(true)
+      
+      setTimeout(() => {
+        setIsPressed(false);
+      }, 5);
     }
+    
+    }
+    if (isPressed) {
+      return <Navigate to="/repolist"/>
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Toolbar>
         <div onClick= {props.onClearInput}>
           <Link to="/">

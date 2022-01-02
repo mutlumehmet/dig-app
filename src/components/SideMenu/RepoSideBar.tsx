@@ -1,54 +1,75 @@
-// import SidePanelCard from "../UI/SidePanelCard"
-
-// const RepoSideBar = () => {
-
-//     return (
-//         <SidePanelCard>RepoSideBar</SidePanelCard>
-//     )
-// }
-
-// export default RepoSideBar
 import SidePanelCard from "../UI/SidePanelCard";
-import * as React from "react";
-
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-
-import FolderIcon from "@mui/icons-material/Folder";
-import DeleteIcon from "@mui/icons-material/Delete";
-
-
-
- const RepoSideBar = ()=> {
-
+import BookOutlinedIcon from "@mui/icons-material/BookOutlined";
+import styles from "./RepoSideBar.module.css";
+import LinkIcon from "@mui/icons-material/Link";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import RepoSideBarListItemCard from "../UI/RepoSideBarListItemCard";
+const RepoSideBar= (props: any) => {
   return (
     <SidePanelCard>
-      <div style={{ padding: "40px" }}>
-        <List>
-          <ListItem
-            secondaryAction={
-              <IconButton edge="end" aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
-            }
-          >
-            <ListItemAvatar>
-              <Avatar>
-                <FolderIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary="Single-line item"
-            />
-          </ListItem>
-        </List>
+      <div className={styles.box}>
+        <BookOutlinedIcon sx={{ fontSize: "64px" }} />
+        <div className={styles.title}>{props.repoData.full_name}</div>
+        <div className={styles["sub-title"]}>
+        {props.repoData.topics}
+        </div>
+        <div className={styles["horizon-box"]}>
+          <div className={styles["url-icon"]}>
+            <LinkIcon />
+          </div>
+          <div className={styles["url-text"]} ><a href={props.repoData.html_url} style={{ textDecoration: "none", color: "inherit" }}>{props.repoData.full_name}</a></div>
+        </div>
+        {/* <div className={styles["horizon-box"]}>
+          <VisibilityOutlinedIcon/>
+          <div className={styles["line-title"]} >Watch</div>
+          <div className={styles.counter}>270</div>          
+        </div> */}
+        <RepoSideBarListItemCard
+          lineSymbol={<VisibilityOutlinedIcon />}
+          lineTitle={"Watch"}
+          counterNumber={props.repoData.watchers}
+          showDivider={true}
+        />
+        <RepoSideBarListItemCard
+          lineSymbol={<VisibilityOutlinedIcon />}
+          lineTitle={"Star"}
+          counterNumber={props.repoData.stargazers_count}
+          showDivider={true}
+        />
+        <RepoSideBarListItemCard
+          lineSymbol={<VisibilityOutlinedIcon />}
+          lineTitle={"Fork"}
+          counterNumber={props.repoData.forks_count}
+          showDivider={false}
+        />
+
+        <div
+          style={{
+            minHeight: "50px"
+          }}
+        ></div>
+
+        <RepoSideBarListItemCard
+          lineSymbol={<VisibilityOutlinedIcon />}
+          lineTitle={"Issues"}
+          counterNumber={props.repoData.open_issues_count}
+          showDivider={true}
+        />
+        <RepoSideBarListItemCard
+          lineSymbol={<VisibilityOutlinedIcon />}
+          lineTitle={"Subscriber"}
+          counterNumber={props.repoData.subscribers_count}
+          showDivider={true}
+        />
+        <RepoSideBarListItemCard
+          lineSymbol={<VisibilityOutlinedIcon />}
+          lineTitle={"Network"}
+          counterNumber={props.repoData.network_count}
+          showDivider={false}
+        />
       </div>
     </SidePanelCard>
   );
-}
+};
 
-export default RepoSideBar
+export default RepoSideBar;

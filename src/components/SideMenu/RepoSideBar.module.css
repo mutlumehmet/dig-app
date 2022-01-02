@@ -1,0 +1,57 @@
+.box {
+  max-width: 360px;
+  padding: 40px 46px 40px 46px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-family: Roboto;
+  font-size: 24px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-align: left;
+  color: #375f9d;
+  margin: 30px 0 8px 0;
+}
+
+.sub-title {font-family: Roboto;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000;}
+
+  .url-icon {
+  width: 24px;
+  height: 24px;
+  margin: 16px 8px 8px 0px;
+  
+}
+  .url-text {
+    margin: 16px 3px 16px 7px;
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: left;
+  color: #2c98f0;
+  }
+
+  .horizon-box {
+    display:flex;
+    flex-direction:row;
+    text-align: left;
+    align-items: center;
+  justify-content: start;
+
+  }
