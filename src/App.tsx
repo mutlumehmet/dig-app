@@ -33,7 +33,6 @@ const App: FC = () => {
   const [userResultsCount, setUserResultsCount] = useState(0);
   const [isInputEntered, setIsInputEntered] = useState(false);
   const [bookmarksArray, setBookmarksArray] = useState<RepoDataInterface[]>([] as RepoDataInterface[] );
-  const [newBookmark, setNewBookmark] = useState<RepoDataInterface[]>([] as RepoDataInterface[] );
   
   interface RepoDataInterface {
     repoId: number;
@@ -66,7 +65,7 @@ const App: FC = () => {
     const response = await fetch(repoProfileURL);
     const repoProfileData = await response.json();
     setRepoProfData(repoProfileData);
-    createNewBookmark(repoProfileData);
+    
     
 
   }
@@ -75,21 +74,14 @@ const App: FC = () => {
     handleFetchRepoProfile();
   }, [repoProfileURL]);
 
-  //
+  
 
 //Bookmarks Logic Here
 
-const createNewBookmark = (data:any) => {
-  const Bookmark = {
-    repoId: data.id,
-    repoTitle: data.full_name,
-    repoText: data.description
-  }
+
+const addBookmark = (data:any) => {
+  setBookmarksArray(prevBook =>[...prevBook,data]);
   
-}
-const addBookmark = (Bookmark:RepoDataInterface) => {
-  setBookmarksArray(prevBook =>[...prevBook,Bookmark]);
-  console.log(bookmarksArray);
 };
 
 /////
@@ -197,7 +189,7 @@ const addBookmark = (Bookmark:RepoDataInterface) => {
   );
 
   return (
-    <BookmarksContext.Provider value={bookmarksArray}>
+    <BookmarksContext.Provider value={{bookedNumbers: bookmarksArray.length}}>
       <UserResultsCountContext.Provider
         value={{
           userResultsCount: userResultsCount,
@@ -234,6 +226,7 @@ const addBookmark = (Bookmark:RepoDataInterface) => {
                         <RepoSideBar
                           repoData={repoProfData}
                           liftBookmarks={addBookmark}
+                          bookData={repoProfData}
                         />
                       }
                       path="/repo"
@@ -282,7 +275,7 @@ const addBookmark = (Bookmark:RepoDataInterface) => {
                       }
                       path="/user"
                     />
-                    <Route element={<Bookmarks />} path="/bookmarked" />
+                    <Route element={<Bookmarks bookmarksData={bookmarksArray} bookUrlLiftUp={handleGetSingleRepo}/>} path="/bookmarks" />
                   </Routes>
                 </div>
               </div>

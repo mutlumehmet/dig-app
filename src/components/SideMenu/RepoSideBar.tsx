@@ -1,3 +1,4 @@
+import { useState } from "react";
 import SidePanelCard from "../UI/SidePanelCard";
 import BookOutlinedIcon from "@mui/icons-material/BookOutlined";
 import styles from "./RepoSideBar.module.css";
@@ -10,10 +11,14 @@ const RepoSideBar= (props: any) => {
 
 //BookmarksClickLogic
 
-
+const newData= {
+  repoId:props.bookData.id,
+  repoTitle: props.bookData.full_name,
+  repoText: props.bookData.description
+}
 
 const handleClick = () => {
-  props.liftBookmarks()
+  props.liftBookmarks(newData)
 }
 
 

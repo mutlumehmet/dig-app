@@ -12,12 +12,13 @@ import { Link} from "react-router-dom";
 import { useContext } from 'react';
 import RepoResultsCountContext from '../../store/repo-results-count-context';
 import UserResultsCountContext from '../../store/user-results-count-context';
+import BookmarksContext from '../../store/bookmarks-context';
 import SidePanelCard from '../UI/SidePanelCard';
 
 export default function SideMenuLists() {
   const ctxRepo = useContext(RepoResultsCountContext);
   const ctxUser = useContext(UserResultsCountContext);
-
+  const ctxBook = useContext(BookmarksContext);
 
   return (
     
@@ -48,14 +49,14 @@ export default function SideMenuLists() {
         </MenuItem>
         </Link>
         
-        <Link to="/bookmarked" style = {{textDecoration: 'none', color: "inherit"}}>
+        <Link to="/bookmarks" style = {{textDecoration: 'none', color: "inherit"}}>
         <MenuItem>
           <ListItemIcon>
             <BookmarkBorderIcon fontSize="medium" />
           </ListItemIcon>
           <ListItemText>Bookmarked</ListItemText>
           <Typography variant="body2" color="text.secondary">
-            12
+            {ctxBook.bookedNumbers}
           </Typography>
         </MenuItem>
         </Link>

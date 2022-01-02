@@ -5,9 +5,11 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import digieggs_logo from "../assets/digieggs_logo.png";
+import Badge from '@mui/material/Badge';
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarksContext from "../store/bookmarks-context";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import { Navigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
@@ -53,7 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar(props:any) {
   const [input, setInput] = useState("");
   const [isPressed, setIsPressed] = useState(false);  
-
+  const ctxBook = useContext(BookmarksContext);
   
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,11 +106,13 @@ export default function PrimarySearchAppBar(props:any) {
           />
         </Search>
         <Link
-          to="/bookmarked"
+          to="/bookmarks"
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <div style={{ display: "flex", paddingLeft: "24px" }}>
+          <Badge color="secondary" badgeContent={ctxBook.bookedNumbers}>
             <BookmarkBorderIcon display="block" />
+            </Badge>
             <Typography
               paddingLeft={"8px"}
               variant="body1"
