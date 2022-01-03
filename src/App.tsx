@@ -42,7 +42,7 @@ const App: FC = () => {
     repoText: string;
   }
 
-  //Handling INPUT
+  //Handle INPUT
 
   const handleValidInput = (valid: string) => {
     setValidInput(valid);
@@ -179,7 +179,8 @@ const App: FC = () => {
   );
 
   return (
-    <BookmarksContext.Provider value={{ bookedNumbers: bookmarksArray.length }}>
+    <BookmarksContext.Provider value={{ bookedNumbers: bookmarksArray.length,
+    allBooked: bookmarksArray}}>
       <UserResultsCountContext.Provider
         value={{
           userResultsCount: userResultsCount,
