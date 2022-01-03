@@ -6,7 +6,7 @@
 }
 
 .title {
-  max-width:250px;
+  max-width: 250px;
   font-family: Roboto;
   font-size: 24px;
   font-weight: normal;
@@ -19,7 +19,8 @@
   word-wrap: break-word;
 }
 
-.sub-title {font-family: Roboto;
+.sub-title {
+  font-family: Roboto;
   font-size: 16px;
   font-weight: normal;
   font-stretch: normal;
@@ -28,17 +29,17 @@
   letter-spacing: normal;
   text-align: left;
   color: #000;
-  word-wrap: break-word;}
+  word-wrap: break-word;
+}
 
-  .url-icon {
+.url-icon {
   width: 24px;
   height: 24px;
   margin: 16px 8px 8px 0px;
-  
 }
-  .url-text {
-    max-width:250px;
-    margin: 16px 3px 16px 7px;
+.url-text {
+  max-width: 250px;
+  margin: 16px 3px 16px 7px;
   font-family: Roboto;
   font-size: 20px;
   font-weight: normal;
@@ -49,13 +50,12 @@
   text-align: left;
   color: #2c98f0;
   word-wrap: break-word;
-  }
+}
 
-  .horizon-box {
-    display:flex;
-    flex-direction:row;
-    text-align: left;
-    align-items: center;
+.horizon-box {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  align-items: center;
   justify-content: start;
-
-  }
+}

@@ -5,14 +5,10 @@ import { Link } from "react-router-dom";
 import ListResultCard from "../UI/ListResultCard";
 
 const UserProfileScreen = (props: any) => {
-  
-
   const getRepoData = (title: string) => {
-    let repoProfileURL:string = `https://api.github.com/repos/${title}`
+    let repoProfileURL: string = `https://api.github.com/repos/${title}`;
     props.repoUrlLiftUp(repoProfileURL);
   };
-
-  /////
   const repoItems = props.userRepos.map(
     ({
       repoId,
@@ -35,7 +31,9 @@ const UserProfileScreen = (props: any) => {
   );
 
   const resultsCountText = (
-    <ListResultCard text={`${props.userProfileData.public_repos} Repositories`} />
+    <ListResultCard
+      text={`${props.userProfileData.public_repos} Repositories`}
+    />
   );
 
   return (
@@ -45,7 +43,6 @@ const UserProfileScreen = (props: any) => {
       <Link to="/repo" style={{ textDecoration: "none", color: "inherit" }}>
         <div>{repoItems}</div>
       </Link>
-      
     </MainPanelHalfCard>
   );
 };

@@ -1,6 +1,5 @@
 import { FC } from "react";
 import styles from "./RepoSideBarListItemCard.module.css";
-import Divider from "@mui/material/Divider";
 interface Props {
   lineSymbol: Element | any;
   lineTitle: string;

@@ -5,11 +5,11 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import digieggs_logo from "../assets/digieggs_logo.png";
-import Badge from '@mui/material/Badge';
+import Badge from "@mui/material/Badge";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarksContext from "../store/bookmarks-context";
 import { Link } from "react-router-dom";
-import { useState, useEffect,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Navigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
@@ -52,41 +52,39 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar(props:any) {
+export default function PrimarySearchAppBar(props: any) {
   const [input, setInput] = useState("");
-  const [isPressed, setIsPressed] = useState(false);  
+  const [isPressed, setIsPressed] = useState(false);
   const ctxBook = useContext(BookmarksContext);
-  
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(event.target.value)
-  }
+    setInput(event.target.value);
+  };
 
-  useEffect(()=> {
-    console.log(input)
-  }, [input])
+  useEffect(() => {
+    console.log(input);
+  }, [input]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      props.onValidInput(input)
-      props.onInputEntered()
-      setInput("")
-      setIsPressed(true)
-      
+    if (event.key === "Enter") {
+      props.onValidInput(input);
+      props.onInputEntered();
+      setInput("");
+      setIsPressed(true);
+
       setTimeout(() => {
         setIsPressed(false);
-      }, 5);
+      }, 1);
     }
-    
-    }
-    if (isPressed) {
-      return <Navigate to="/repolist"/>
+  };
+  if (isPressed) {
+    return <Navigate to="/repolist" />;
   }
 
   return (
     <AppBar position="fixed">
       <Toolbar>
-        <div onClick= {props.onClearInput}>
+        <div onClick={props.onClearInput}>
           <Link to="/">
             <img src={digieggs_logo} alt="digieggs-logo" />
           </Link>
@@ -102,7 +100,6 @@ export default function PrimarySearchAppBar(props:any) {
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             value={input}
-            
           />
         </Search>
         <Link
@@ -110,8 +107,8 @@ export default function PrimarySearchAppBar(props:any) {
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <div style={{ display: "flex", paddingLeft: "24px" }}>
-          <Badge color="secondary" badgeContent={ctxBook.bookedNumbers}>
-            <BookmarkBorderIcon display="block" />
+            <Badge color="secondary" badgeContent={ctxBook.bookedNumbers}>
+              <BookmarkBorderIcon display="block" />
             </Badge>
             <Typography
               paddingLeft={"8px"}
