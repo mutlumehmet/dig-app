@@ -42,7 +42,7 @@ const App: FC = () => {
     repoText: string;
   }
 
-  //Handle INPUT
+  //Handling INPUT
 
   const handleValidInput = (valid: string) => {
     setValidInput(valid);

@@ -31,6 +31,7 @@ const RepoSideBar = (props: any) => {
             <a
               href={props.repoData.html_url}
               style={{ textDecoration: "none", color: "inherit" }}
+              target="_blank"
             >
               {props.repoData.full_name}
             </a>
