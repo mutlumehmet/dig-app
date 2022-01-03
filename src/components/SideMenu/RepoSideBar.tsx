@@ -1,46 +1,42 @@
-import { useState } from "react";
 import SidePanelCard from "../UI/SidePanelCard";
 import BookOutlinedIcon from "@mui/icons-material/BookOutlined";
 import styles from "./RepoSideBar.module.css";
 import LinkIcon from "@mui/icons-material/Link";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import RepoSideBarListItemCard from "../UI/RepoSideBarListItemCard";
-import BookmarksButton from "../UI/BookmarksButton"
+import BookmarksButton from "../UI/BookmarksButton";
 
-const RepoSideBar= (props: any) => {
+const RepoSideBar = (props: any) => {
+  const newData = {
+    repoId: props.bookData.id,
+    repoTitle: props.bookData.full_name,
+    repoText: props.bookData.description,
+  };
 
-//BookmarksClickLogic
-
-const newData= {
-  repoId:props.bookData.id,
-  repoTitle: props.bookData.full_name,
-  repoText: props.bookData.description
-}
-
-const handleClick = () => {
-  props.liftBookmarks(newData)
-}
-
+  const handleClick = () => {
+    props.liftBookmarks(newData);
+  };
 
   return (
     <SidePanelCard>
       <div className={styles.box}>
         <BookOutlinedIcon sx={{ fontSize: "64px" }} />
         <div className={styles.title}>{props.repoData.full_name}</div>
-        <div className={styles["sub-title"]}>
-        {props.repoData.topics}
-        </div>
+        <div className={styles["sub-title"]}>{props.repoData.topics}</div>
         <div className={styles["horizon-box"]}>
           <div className={styles["url-icon"]}>
             <LinkIcon />
           </div>
-          <div className={styles["url-text"]} ><a href={props.repoData.html_url} style={{ textDecoration: "none", color: "inherit" }}>{props.repoData.full_name}</a></div>
+          <div className={styles["url-text"]}>
+            <a
+              href={props.repoData.html_url}
+              style={{ textDecoration: "none", color: "inherit" }}
+              target="_blank"
+            >
+              {props.repoData.full_name}
+            </a>
+          </div>
         </div>
-        {/* <div className={styles["horizon-box"]}>
-          <VisibilityOutlinedIcon/>
-          <div className={styles["line-title"]} >Watch</div>
-          <div className={styles.counter}>270</div>          
-        </div> */}
         <RepoSideBarListItemCard
           lineSymbol={<VisibilityOutlinedIcon />}
           lineTitle={"Watch"}
@@ -62,7 +58,7 @@ const handleClick = () => {
 
         <div
           style={{
-            height: "35px"
+            height: "35px",
           }}
         ></div>
 
@@ -86,18 +82,18 @@ const handleClick = () => {
         />
         <div
           style={{
-            height: "25px"
+            height: "25px",
           }}
         ></div>
         <div onClick={handleClick}>
-        <BookmarksButton/>
+          <BookmarksButton />
         </div>
       </div>
-      <div 
-          style={{
-            height: "60px"
-          }}
-        ></div>
+      <div
+        style={{
+          height: "60px",
+        }}
+      ></div>
     </SidePanelCard>
   );
 };

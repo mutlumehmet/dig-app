@@ -1,21 +1,21 @@
 .card {
-    display: flex;
-    flex-direction: row;
-    border-bottom: solid #c4c4c4 1px;
-    margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  border-bottom: solid #c4c4c4 1px;
+  margin-top: 8px;
 }
 
 .card-text {
-    display:flex;
-    flex-direction:column;
+  display: flex;
+  flex-direction: column;
 }
 
 .icon {
-    margin-top: 8px
+  margin-top: 8px;
 }
 
 h2 {
-    margin: 8px 0 0 8px;
+  margin: 8px 0 0 8px;
   font-family: Roboto;
   font-size: 20px;
   font-weight: normal;
@@ -28,7 +28,7 @@ h2 {
 }
 
 p {
-    margin: 8px 0 23px 8px;
+  margin: 8px 0 23px 8px;
   font-family: Roboto;
   font-size: 16px;
   font-weight: normal;

@@ -8,16 +8,16 @@ import RepoListScreen from "./components/Repositories/RepoListScreen";
 import Bookmarks from "./components/Bookmarks/Bookmarks";
 import UserListScreen from "./components/Users/UserListScreen";
 
-import InputContext from "./store/input-context";
-import RepoResultsCountContext from "./store/repo-results-count-context";
-import UserResultsCountContext from "./store/user-results-count-context";
-import BookmarksContext from "./store/bookmarks-context";
-
 import SideMenuLists from "./components/SideMenu/SideMenuLists";
 import RepoSideBar from "./components/SideMenu/RepoSideBar";
 import RepoProfileScreen from "./components/Repositories/RepoProfileScreen";
 import UserSideBar from "./components/SideMenu/UserSideBar";
 import { UserProfileScreen } from "./components/Users/UserProfileScreen";
+
+import InputContext from "./store/input-context";
+import RepoResultsCountContext from "./store/repo-results-count-context";
+import UserResultsCountContext from "./store/user-results-count-context";
+import BookmarksContext from "./store/bookmarks-context";
 
 const App: FC = () => {
   const [validInput, setValidInput] = useState("");
@@ -32,14 +32,17 @@ const App: FC = () => {
   const [users, setUsers] = useState([]);
   const [userResultsCount, setUserResultsCount] = useState(0);
   const [isInputEntered, setIsInputEntered] = useState(false);
-  const [bookmarksArray, setBookmarksArray] = useState<RepoDataInterface[]>([] as RepoDataInterface[] );
-  
+  const [bookmarksArray, setBookmarksArray] = useState<RepoDataInterface[]>(
+    [] as RepoDataInterface[]
+  );
+
   interface RepoDataInterface {
     repoId: number;
     repoTitle: string;
     repoText: string;
-}
- 
+  }
+
+  //Handle INPUT
 
   const handleValidInput = (valid: string) => {
     setValidInput(valid);
@@ -52,10 +55,10 @@ const App: FC = () => {
   const handleInputEntered = () => {
     setTimeout(() => {
       setIsInputEntered(true);
-    }, 200);
+    }, 1);
   };
 
-  //FetchSingleRepoProfile
+  //Fetch SINGLE REPOSITORY
 
   const handleGetSingleRepo = (repoProfURL: string) => {
     setRepoProfileURL(repoProfURL);
@@ -65,29 +68,19 @@ const App: FC = () => {
     const response = await fetch(repoProfileURL);
     const repoProfileData = await response.json();
     setRepoProfData(repoProfileData);
-    
-    
-
   }
 
   useEffect(() => {
     handleFetchRepoProfile();
   }, [repoProfileURL]);
 
-  
+  //BOOKMARKS LOGIC
 
-//Bookmarks Logic Here
+  const addBookmark = (data: any) => {
+    setBookmarksArray((prevBook) => [...prevBook, data]);
+  };
 
-
-const addBookmark = (data:any) => {
-  setBookmarksArray(prevBook =>[...prevBook,data]);
-  
-};
-
-/////
-
-
-  //FetchSingle USER Profile
+  //Fetch USER PROFILE
 
   const getUserProfile = (userProfURL: string) => {
     console.log(userProfURL);
@@ -104,9 +97,8 @@ const addBookmark = (data:any) => {
     handleFetchUserProfile();
   }, [userProfileURL]);
 
-  //
+  //Fetch REPO LIST
 
-  //Fetch Repos
   async function handleFetchRepos() {
     const URLPar = validInput;
     const RepoURL = `https://api.github.com/search/repositories?q=${URLPar}`;
@@ -126,9 +118,9 @@ const addBookmark = (data:any) => {
 
     setRepoResultsCount(repodata.total_count);
   }
-  ////////
 
-  //Fetch User Repos
+  //Fetch USER REPO LIST
+
   const handleGetUserRepos = (URL: string) => {
     setUserReposURL(URL);
   };
@@ -152,9 +144,7 @@ const addBookmark = (data:any) => {
     setUserRepos(transUserRepos);
   }
 
-  ////////
-
-  //Fetch User
+  //Fetch USER LIST
 
   async function handleFetchUsers() {
     const URLPar = validInput;
@@ -189,7 +179,8 @@ const addBookmark = (data:any) => {
   );
 
   return (
-    <BookmarksContext.Provider value={{bookedNumbers: bookmarksArray.length}}>
+    <BookmarksContext.Provider value={{ bookedNumbers: bookmarksArray.length,
+    allBooked: bookmarksArray}}>
       <UserResultsCountContext.Provider
         value={{
           userResultsCount: userResultsCount,
@@ -214,9 +205,6 @@ const addBookmark = (data:any) => {
                 />
               </div>
               <div>
-                {/* <div style= {{display: !isInputEntered ? "none" : ""}}>
-          <SidePanel />
-        </div> */}
                 <div>
                   {/* Sidebar */}
                   <Routes>
@@ -275,7 +263,15 @@ const addBookmark = (data:any) => {
                       }
                       path="/user"
                     />
-                    <Route element={<Bookmarks bookmarksData={bookmarksArray} bookUrlLiftUp={handleGetSingleRepo}/>} path="/bookmarks" />
+                    <Route
+                      element={
+                        <Bookmarks
+                          bookmarksData={bookmarksArray}
+                          bookUrlLiftUp={handleGetSingleRepo}
+                        />
+                      }
+                      path="/bookmarks"
+                    />
                   </Routes>
                 </div>
               </div>

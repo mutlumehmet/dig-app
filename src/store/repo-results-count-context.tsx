@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface RepoResultsCountContextInterface {
-    repoResultsCount: number;
+  repoResultsCount: number;
 }
 
-const RepoResultsCountContext = React.createContext<RepoResultsCountContextInterface>({
-    repoResultsCount: 0
-});
+const RepoResultsCountContext =
+  React.createContext<RepoResultsCountContextInterface>({
+    repoResultsCount: 0,
+  });
 
 export default RepoResultsCountContext;
