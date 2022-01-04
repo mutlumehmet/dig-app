@@ -17,9 +17,9 @@ const ctxBook = useContext(BookmarksContext)
     props.bookUrlLiftUp(repoProfileURL);
   };
 
-  const repoItems = props.bookmarksData.map(
+  // const repoItems = props.bookmarksData.map(
     // Bosses I can't use the context prop below because I can't wrap my head around how to solve the TYPE Definition of the data.
-    // const repoItems = ctxBook.allBooked.map(
+    const repoItems = ctxBook.allBooked.map(
   ({
       repoId,
       repoTitle,
@@ -28,7 +28,6 @@ const ctxBook = useContext(BookmarksContext)
       repoId: number;
       repoTitle: string;
       repoText: string;
-      onRepoFullName: (title: string) => any;
     }) => (
       <ListCard
         key={repoId}
