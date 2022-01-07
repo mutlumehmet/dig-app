@@ -17,7 +17,7 @@ import { UserProfileScreen } from "./components/Users/UserProfileScreen";
 import InputContext from "./store/input-context";
 import RepoResultsCountContext from "./store/repo-results-count-context";
 import UserResultsCountContext from "./store/user-results-count-context";
-import BookmarksContext from "./store/bookmarks-context";
+
 
 const App: FC = () => {
   const [validInput, setValidInput] = useState("");
@@ -32,15 +32,9 @@ const App: FC = () => {
   const [users, setUsers] = useState([]);
   const [userResultsCount, setUserResultsCount] = useState(0);
   const [isInputEntered, setIsInputEntered] = useState(false);
-  const [bookmarksArray, setBookmarksArray] = useState<RepoDataInterface[]>(
-    [] as RepoDataInterface[]
-  );
+  
 
-  interface RepoDataInterface {
-    repoId: number;
-    repoTitle: string;
-    repoText: string;
-  }
+  
 
   //Handle INPUT
 
@@ -75,10 +69,7 @@ const App: FC = () => {
   }, [repoProfileURL]);
 
   //BOOKMARKS LOGIC
-
-  const addBookmark = (data: any) => {
-    setBookmarksArray((prevBook) => [...prevBook, data]);
-  };
+  
 
   //Fetch USER PROFILE
 
@@ -86,15 +77,13 @@ const App: FC = () => {
     console.log(userProfURL);
     setUserProfileURL(userProfURL);
   };
-
+  useEffect(() => {
   async function handleFetchUserProfile() {
     const response = await fetch(userProfileURL);
     const userProfileData = await response.json();
     setUserProfData(userProfileData);
   }
 
-  useEffect(() => {
-    handleFetchUserProfile();
   }, [userProfileURL]);
 
   //Fetch REPO LIST
@@ -178,9 +167,10 @@ const App: FC = () => {
     </div>
   );
 
+  
+
   return (
-    <BookmarksContext.Provider value={{ bookedNumbers: bookmarksArray.length,
-    allBooked: bookmarksArray}}>
+    <BookmarksWrapper>
       <UserResultsCountContext.Provider
         value={{
           userResultsCount: userResultsCount,
@@ -197,23 +187,37 @@ const App: FC = () => {
             }}
           >
             <BrowserRouter>
-              <div>
+              
+                  {/* MainScreen */}
+                  <MainScreen />
+                  
+            </BrowserRouter>
+          </InputContext.Provider>
+        </RepoResultsCountContext.Provider>
+      </UserResultsCountContext.Provider>
+      </BookmarksWrapper>
+  );
+};
+
+export default App;
+
+const MainScreen = () => {
+  return (
+    <Routes>
+      <div>
                 <Header
                   onValidInput={handleValidInput}
                   onInputEntered={handleInputEntered}
                   onClearInput={handleClearInput}
                 />
               </div>
-              <div>
-                <div>
-                  {/* Sidebar */}
-                  <Routes>
-                    <Route element={defaultSideBar} path="/repolist" />
+      <div>
+      <Route element={defaultSideBar} path="/repolist" />
                     <Route
                       element={
                         <RepoSideBar
                           repoData={repoProfData}
-                          liftBookmarks={addBookmark}
+                          
                           bookData={repoProfData}
                         />
                       }
@@ -225,10 +229,9 @@ const App: FC = () => {
                       path="/user"
                     />
                     <Route element={defaultSideBar} path="/bookmarks" />
-                  </Routes>
-
-                  {/* MainScreen */}
-                  <Routes>
+      </div>
+      <div>
+    
                     <Route element={<ScreenEmpty />} path="/" />
                     <Route
                       element={
@@ -272,15 +275,9 @@ const App: FC = () => {
                       }
                       path="/bookmarks"
                     />
+                  
+                  </div>
+                  </div>
                   </Routes>
-                </div>
-              </div>
-            </BrowserRouter>
-          </InputContext.Provider>
-        </RepoResultsCountContext.Provider>
-      </UserResultsCountContext.Provider>
-    </BookmarksContext.Provider>
-  );
-};
-
-export default App;
+  )
+}

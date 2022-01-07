@@ -7,6 +7,11 @@ import RepoSideBarListItemCard from "../UI/RepoSideBarListItemCard";
 import BookmarksButton from "../UI/BookmarksButton";
 
 const RepoSideBar = (props: any) => {
+  const ctxBook = useContext(BookmarksContext)
+  const addBookmark = (data: any) => {
+    ctxBook.setBookmarks((prevBook) => [...prevBook, data]);
+  };
+  
   const newData = {
     repoId: props.bookData.id,
     repoTitle: props.bookData.full_name,
